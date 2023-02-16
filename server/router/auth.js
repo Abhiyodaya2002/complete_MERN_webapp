@@ -57,13 +57,15 @@ User.findOne({email: email}).then((result)=>{
     
     if(!name || !email || !phone || !work || !password || !cpassword||(password!=cpassword))
     {
+        console.log("Invalid entered details. enter again");
       return  res.json({error:"Invalid entered details. enter again"}); 
     }
     try{
    const result = await User.findOne({email: email});
    if(result)
         {
-           return res.send("User already exits");
+            console.log("User exists");
+           return res.json({message:"User already exits"});
         }
 
         
@@ -76,7 +78,8 @@ User.findOne({email: email}).then((result)=>{
             cpassword: cpassword
         });
      await user.save();
-  res.send("User registered successfully");
+     console.log("User registered");
+  res.json({message:"User registered successfully"});
 }
 catch(err){
     //THis block will show all type of error the might occure at any place and time in try block

@@ -20,26 +20,27 @@ function Signup() {
     }
 
     const postData =async(e)=>{
+        //send the contents of signup page to /register route of backend and the data will be stored in database
 e.preventDefault();
 const {name,email,phone,work , password ,cpassword}=user;
 const res=await fetch("/register",{
     method:"POST",
     headers:{
-        "content-type":"application.json"
+        "content-type":"application/json"
     },
     body: JSON.stringify({
         name:name,email:email,phone:phone,work:work,password:password,cpassword:cpassword
     })
 })
  const data=await res.json();
- console.log(data.name);
+ //console.log(data.name);
  if(!data)
  {
     window.alert("invalid registration");
     console.log("Invalid registration");
  }
  else{
-    console.log(data);
+  //  console.log(data);
     window.alert("Valid registration");
     console.log("Valid registration");
     navigate("/login");
@@ -64,7 +65,7 @@ const res=await fetch("/register",{
                         <div className="tab-content" id="myTabContent">
                             <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <h3 className="register-heading">Sign up</h3>
-                                <form method='post'>
+                                <form method='POST'>
                                 <div className="row register-form">
                                     <div className="col-md-6">
                                         <div className="form-group">

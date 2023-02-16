@@ -3,7 +3,7 @@ import { Link ,useNavigate} from 'react-router-dom'
 import "./signup.css"
 function Signup() {
     const navigate=useNavigate();
-    const [user,SetUser]=useState({
+    const [user,SetUser]=useState({  //useState is used to to save the data temporarily on frontend 
      name:"",
      email:"",
      phone:"",
@@ -21,7 +21,7 @@ function Signup() {
 
     const postData =async(e)=>{
         //send the contents of signup page to /register route of backend and the data will be stored in database
-e.preventDefault();
+e.preventDefault(); //many times form reloads itself on clicking submit button so we have to remove all the defualt functionalities
 const {name,email,phone,work , password ,cpassword}=user;
 const res=await fetch("/register",{
     method:"POST",

@@ -92,38 +92,43 @@ res.send(err);
     router.post("/signin",async(req,res)=>{
         try{
               const {email,password}=req.body;
+              console.log(req.body);
         if(!email || !password)
         {
-            return res.send("Fill complete details to login");
+            return res.status(400).json({message:"Fill complete details to login"});
         }
       
             const userLogin= await User.findOne({email: email});
           if(!userLogin)
           {
-            return res.send("Invalid details for login");
+            return res.status(400).json({message:"Invalid details for login"});
           }
-            const isMatch =bcrypt.compare(password,userLogin.password);
+            const isMatch =await bcrypt.compare(password,userLogin.password);
             const token =await userLogin.generateAuthToken();
             console.log(token);
-
+            
             res.cookie("jwtoken",token,{
-                //THIS expires field is used to end the login session of the user by destroying the cookie
-                expires: new Date(Date.now+ 25892000000),
-                //25892000000 --> it is the value in millisecond that is equal to 30 days. So from the current date till upcomming 30 days the cookie will be active and after that it will expire.
+                //THIS maxAge field is used to end the login session of the user by destroying the cookie. Its value is in seconds.
+                maxAge: 2*60*10 * 1000, 
+                
                 httpOnly: true
             })
+            console.log(isMatch);
             if(isMatch)
             {
-             res.send("User Logined ");
+                console.log("User logined");
+             res.json({message:"User Logined "});
             }
             else
             {
-             res.json({error :"Invalid Details"});
+                console.log("Invalid Details.Enter again");
+             res.status(400).json({error :"Invalid Details.Enter again"});
             }
          
         }catch(err)
         {
-            res.send(err);
+            console.log(err);
+            res.status(400).json({message:err});
         }
     });
 

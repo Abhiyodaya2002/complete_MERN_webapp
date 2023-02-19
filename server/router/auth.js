@@ -4,6 +4,7 @@ require("../db/conn");
 const User=require("../model/userSchema");
 const router=express.Router();
 const bcrypt=require("bcryptjs");
+const authenticate=require("../middleware/authenticate");
 router.get("/",(req,res)=>{
    // res.cookie("jwtoken","thapa");
     res.send("Pandey here from lucknow UP dig");
@@ -125,11 +126,16 @@ res.send(err);
              res.status(400).json({error :"Invalid Details.Enter again"});
             }
          
-        }catch(err)
+        }
+        catch(err)
         {
             console.log(err);
             res.status(400).json({message:err});
         }
     });
+    router.get("/about",authenticate,(req,res)=>{
+        console.log("hello from about");
+        res.send(req.rootUser);
+    })
 
 module.exports=router;

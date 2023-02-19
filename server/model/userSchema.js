@@ -48,7 +48,8 @@ tokens :[
 //this pre function is a middleware which will get executed before "save " function.
 userSchema.pre("save",async function (next){
     
-    if(this.isModified("password")){//agar password me koi change hota hai then only we will hash it
+    if(this.isModified("password"))
+    {//agar password me koi change hota hai then only we will hash it
     
 this.password=await bcrypt.hash(this.password,12);
 this.cpassword=await bcrypt.hash(this.cpassword,12);
@@ -66,7 +67,8 @@ userSchema.methods.generateAuthToken=async function(){
 
           await this.save();
           return token;
-    }catch(err)
+    }
+    catch(err)
     {
         console.log(err);
     }

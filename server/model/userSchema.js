@@ -33,6 +33,10 @@ cpassword:{
     required: true
 
 },
+date:{
+    type:Date,
+    default: Date.now
+},
 //ek hi user kayi baar login kar sakta hai aur har login pe hame ek nayi token deni hai hence we are taking an array of token for each user
 tokens :[
     {

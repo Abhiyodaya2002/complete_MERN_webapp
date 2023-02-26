@@ -1,7 +1,38 @@
-import React from 'react'
+import React ,{useEffect,useState} from 'react'
 import "./contact.css"
 function Contact() {
+	const [userData,setUserData]=useState({});
+	const callContact=async()=>{
+		
+		try{
+		const res=await fetch("/getData",{
+		  method: "GET",
+		  headers:{
+		 
+		  "Content-Type": "application/json"
+		  }
+		});
+		
+		const data=await res.json();
+		console.log(data);
+		setUserData(data);
+		if(!data||res.status!==200)
+		{
+		  throw new Error(res.error);
+		}
+		}
+		catch(err){
+		console.log(err);
+		
+		}
+		}
+		useEffect(()=>{
+			callContact();//we are calling a function in in useEffect because in useEffect we cannot use async await
+		},[])
+		
   return (
+
+	
    <>
 
 
@@ -12,17 +43,17 @@ function Contact() {
 		</div>
 		<div class="form">
 			<h1>Get In Touch</h1>
-			<form action="">
+			<form action="GET">
 				<div class="flex-rev">
-					<input type="text" placeholder="Your name" name="name" id="name" />
+					<input type="text" placeholder="Your name" name="name" id="name" value={userData.name}/>
 					<label for="name">Full Name</label>
 				</div>
 				<div class="flex-rev">
-					<input type="email" placeholder="Your email" name="email" id="email" />
+					<input type="email" placeholder="Your email" name="email" id="email" value={userData.email}/>
 					<label for="email">Your Email</label>
 				</div>
         <div class="flex-rev">
-					<input type="phone" placeholder="Your Phone" name="phone" id="phone" />
+					<input type="phone" placeholder="Your Phone" name="phone" id="phone" value={userData.phone}/>
 					<label for="phone">Your Phone</label>
 				</div>
 

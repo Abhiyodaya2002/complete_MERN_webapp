@@ -137,5 +137,19 @@ res.send(err);
         console.log("hello from about");
         res.send(req.rootUser);
     })
+    
+//get user data for contact us and about page
+    router.get("/getData",authenticate,(req,res)=>{
+        console.log("hello from contact");
+        res.send(req.rootUser);
+    })
+
+    router.get("/logout",authenticate,(req,res)=>{
+        console.log("hello from about");
+        res.clearCookie("jwtoken",{path:"/"});
+        res.status(200).json({message:"user loged out"});
+    })
+    
+
 
 module.exports=router;

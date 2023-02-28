@@ -1,7 +1,9 @@
-import React ,{useState} from 'react'
+import React ,{useContext, useState} from 'react'
 import { Link ,useNavigate} from 'react-router-dom'
 import "./login.css"
+import { UserContext } from '../App';
 function Login() {
+	const {state,dispatch}=useContext(UserContext);
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
   const navigate=useNavigate();
@@ -25,6 +27,7 @@ function Login() {
 		window.alert("Invalid credentials");
 	}
 	else{
+		dispatch({type:"USER",payload:true});
       window.alert("User logined successfully");
 	  navigate("/");
 	}

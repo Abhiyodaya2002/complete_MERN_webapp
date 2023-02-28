@@ -9,10 +9,15 @@ import Signup from "./components/Signup";
 import Errorpage from './components/Errorpage';
 import Logout from "./components/Logout"
 import {Routes,Route} from "react-router-dom";
+import { createContext, useReducer } from 'react';
 
+import { initialstate, reducer } from './reducer/UseReducer';
+export const UserContext=createContext();
 function App() {
+ const [state,dispatch]=useReducer(reducer ,initialstate);
   return (
     <>
+    <UserContext.Provider value={{state,dispatch}}>
     <Navbar></Navbar>
     <Routes>
 
@@ -32,8 +37,10 @@ function App() {
 </Route>
 <Route path='*' element={<Errorpage></Errorpage>}></Route>
 </Routes>
+</UserContext.Provider>
     </>
   );
 }
+
 
 export default App;
